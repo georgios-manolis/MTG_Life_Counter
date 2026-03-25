@@ -28,10 +28,7 @@ import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.sp
 import com.example.mtglifecounter.ui.theme.MTGLifeCounterTheme
 
-/* Das ist eine "Klasse" namens MainActivity.
-Eine Activity ist (vereinfacht) ein "Bildschirm" deiner App. ": ComponentActivity()" bedeutet: MainActivity erbt von ComponentActivity.
-ComponentActivity ist eine Android-Klasse (s. import) damit Android deine Activity starten/stoppen kann.
- */
+// Eine Activity ist quasi der Bildschirm der App. ": ComponentActivity()" bedeutet: MainActivity erbt von ComponentActivity (s. imports).
 class MainActivity : ComponentActivity() {
     /*onCreate ist eine "Lifecycle"-Methode die aufgerufen wird, wenn der Bildschirm erstellt wird.
     savedInstanceState enthält ggf. gespeicherte Daten, wenn der Bildschirm z.B. nach einer Drehung wiederhergestellt wird.
@@ -41,14 +38,14 @@ class MainActivity : ComponentActivity() {
     private val player2 = Player(); // Objekt: Spieler 2 erstellen mit Eigenschaften der Java-Klasse "Player"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-       //  enableEdgeToEdge() sorgt dafür, dass deine App bis in die Systembereiche (Statusleiste oben / Navigation unten) "edge-to-edge" zeichnen darf
+       //enableEdgeToEdge() sorgt dafür, dass die App bis in die Systembereiche (Statusleiste oben / Navigation unten) zeichnen darf
         enableEdgeToEdge()
-        //setContent { ... } ist Jetpack Compose. Hier sagst du: "Ab jetzt baue ich die UI in Kotlin (Compose) und NICHT mit XML.
+        //setContent { ... } ist Jetpack Compose.
         setContent {
-            // MTGLifeCounterTheme ist das Theme der App. Also Schriftart, Farben, Abstände, etc.
+            // MTGLifeCounterTheme ist Schriftart, Farben, Abstände, etc.
             MTGLifeCounterTheme {
                 /* Modifier fillMaxSize macht, dass UI den ganzen Bildschirm einnimmt. InnerPadding ist im import Scaffold
-                und sorgt dafür, dass eingaben oder Inhalte nicht unter einer Ober- oder Untergrenze rutschen*/
+                und sorgt dafür, dass Eingaben oder Inhalte nicht unter einer Ober- oder Untergrenze rutschen*/
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Column(modifier = Modifier.padding(innerPadding).fillMaxSize()) {
                         Life(player= player1, Modifier.weight(1f))
@@ -86,9 +83,10 @@ fun Life(player:Player, modifier: Modifier = Modifier) {
                     Text(text = playerName, fontSize = 24.sp, modifier = Modifier.clickable{editPlayerName = true})
                 }
             }
-        //Mit Boxen erstellt man Bildschirmbereiche, die etwas machen sollen. in dem Fall soll objekt player1 4 bereiche haben (Spielername, +1. Lifepoints, -1)
+        /*Mit Boxen erstellt man Bildschirmbereiche, die etwas machen sollen.
+        In dem Fall soll Objekt player1 4 bereiche haben (Spielername, +1 Button. Lifepoint-Anzeige, -1 Button)*/
 
-        // +1 Button
+        // +1 Box "Button"
         Box(modifier = Modifier.weight(1f).fillMaxWidth().clickable{
             player.increase()                    // Java erhöht
             lifePoints = player.getALife()
@@ -97,7 +95,7 @@ fun Life(player:Player, modifier: Modifier = Modifier) {
         // Anzeige der aktuellen Lifepoints
         Text(text = lifePoints.toString(), fontSize = 32.sp)
 
-        // -1 Button
+        // -1 bBox "Button"
         Box(modifier = Modifier.weight(1f).fillMaxWidth().clickable{
             player.decrease()              // Java verringert
             lifePoints = player.getALife()       // UI aktualisieren
